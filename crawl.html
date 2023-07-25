@@ -10,28 +10,61 @@
 
 <body>
     <!-- Overall container -->
-    <div class="container"></div>
-    <!-- Top bar containing score and time -->
-    <div class="score-time-bar">
-        <button>View High Scores</button>
-        <p>Time: 0:00</p>
-    </div>
+    <div class="container">
+        <!-- Top bar containing score and time -->
+        <div class="score-time-bar">
+            <button>View High Scores</button>
+            <p>Time: 0:00</p>
+        </div>
 
-    <!-- content container -->
-    <div class="content-container">
-        <!-- Quiz Introduction screen -->
-        <header class="quiz-intro-screen">
-            <h1>Coding Quiz Challenge</h1>
-            <p>Try to answer the following code related questions within the time limit.</p>
-            <p>Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
-        </header>
+        <!-- content container -->
+        <div class="content-container">
+            <!-- Quiz Introduction screen w/ start button-->
+            <header class="quiz-intro-screen">
+                <h1>Coding Quiz Challenge</h1>
+                <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect
+                    answers will penalize your score/time by ten seconds!</p>
+                <button>Start Quiz</button>
+            </header>
 
-        <!-- Quiz Q&A -->
-        <main>
-            <div class="quiz-qa-screen"></div>
-            <div class="quiz-finish-screen"></div>
-            <button>Start Quiz</button>
-        </main>
+
+            <main>
+                <!-- Quiz Q&A screen -->
+                <section class="quiz-qa-screen">
+                    <h2>Question here</h2>
+                    <ul>
+                        <li><button>Answer 1</button></li>
+                        <li><button>Answer 2</button></li>
+                        <li><button>Answer 3</button></li>
+                        <li><button>Answer 4</button></li>
+                    </ul>
+                </section>
+
+                <!-- Quiz results screen -->
+                <section class="quiz-results-screen">
+                    <h2>All Done!</h2>
+                    <p>Your final score is </p>
+                    <div>
+                        <label for="">Enter Initials:</label>
+                        <input type="text">
+                        <button>Submit</button>
+                    </div>
+                </section>
+
+                <!-- Quiz results history screen -->
+                <section class="quiz-results-history-screen">
+                    <h2 id="results-history-h2">High Scores</h2>
+                    <ul id="results-history-ul">
+                        <li>tpf: 22</li>
+                        <li>tpf: 22</li>
+                        <li>tpf: 22</li>
+                        <li>tpf: 22</li>
+                    </ul>
+                    <button>Go Back</button>
+                    <button>Clear High Scores</button>
+                </section>
+            </main>
+        </div>
     </div>
 </body>
 
