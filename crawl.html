@@ -1,11 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>codequiz</title>
+    <link rel="stylesheet" href="assets/css/crawl.css">
 </head>
+
 <body>
-    
+    <!-- Overall container -->
+    <div class="container"></div>
+    <!-- Top bar containing score and time -->
+    <div class="score-time-bar">
+        <button>View High Scores</button>
+        <p>Time: 0:00</p>
+    </div>
+
+    <!-- content container -->
+    <div class="content-container">
+        <!-- Quiz Introduction screen -->
+        <header class="quiz-intro-screen">
+            <h1>Coding Quiz Challenge</h1>
+            <p>Try to answer the following code related questions within the time limit.</p>
+            <p>Keep in mind that incorrect answers will penalize your score/time by ten seconds!</p>
+        </header>
+
+        <!-- Quiz Q&A -->
+        <main>
+            <div class="quiz-qa-screen"></div>
+            <div class="quiz-finish-screen"></div>
+            <button>Start Quiz</button>
+        </main>
+    </div>
 </body>
+
 </html>

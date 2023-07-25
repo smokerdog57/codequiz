@@ -1,0 +1,29 @@
+/* set the global style */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.content-container {
+    border: solid 1px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width:50%;
+    height: 100vh;
+    margin: 0 auto
+}
+.score-time-bar {    
+    margin:10px
+}
+
+.score-time-bar p {
+    float: right;
+}
+
+.quiz-intro-screen {
+text-align: center;
+
+}
