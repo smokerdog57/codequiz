@@ -7,6 +7,11 @@
     /* border: 1px solid red; */
 }
 
+.hidden {
+    display: none;
+}
+
+
 p {
     font-size: 1.0em;
     padding-bottom: 10px;
@@ -15,6 +20,7 @@ p {
 button {
     background-color: blueviolet;
     color: white;
+    cursor: pointer;
 }
 
 h1 {
@@ -61,7 +67,6 @@ ul,li {
 }
 
 .quiz-intro-screen {
-    display: block;
     margin-top: 10vh;
     margin-bottom: 20vh;
     margin-left: 10%;
@@ -79,22 +84,9 @@ ul,li {
 }
 
 main {
-    display: none;
+    /* display: none; */
     margin-top: 10vh;
     margin-bottom: 20vh;
     margin-left: 10%;
     margin-right: 10%;
-}
-
-.quiz-qa-screen {
-    display: none;
-}
-
-
-.quiz-results-screen {
-    display: none;
-}
-
-.quiz-results-history-screen {
-    display: none;
 }

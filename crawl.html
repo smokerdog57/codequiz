@@ -14,45 +14,47 @@
         <!-- Top bar containing score and time -->
         <div class="score-time-bar">
             <button>View High Scores</button>
-            <p>Time: 0:00</p>
+            <p id="count"></p>
+            <p>Time left:&nbsp&nbsp</p>     
         </div>
 
         <!-- content container -->
         <div class="content-container">
             <!-- Quiz Introduction screen w/ start button-->
-            <header class="quiz-intro-screen">
+            <header id="headerQuizIntro" class="quiz-intro-screen">
                 <h1>Coding Quiz Challenge</h1>
                 <p>Try to answer the following code related questions within the time limit. Keep in mind that incorrect
                     answers will penalize your score/time by ten seconds!</p>
-                <button>Start Quiz</button>
+                <button id="startQuizBtn">Start Quiz</button>
             </header>
 
 
             <main>
                 <!-- Quiz Q&A screen -->
-                <section class="quiz-qa-screen">
-                    <h2>Question here</h2>
+                <section id="sectionQA" class="hidden quiz-qa-screen">
+                    <h2 id="question">Question here</h2>
                     <ul>
-                        <li><button>Answer 1</button></li>
-                        <li><button>Answer 2</button></li>
-                        <li><button>Answer 3</button></li>
-                        <li><button>Answer 4</button></li>
+                        <li><button id="a1" class="choicePicked">Answer 1</button></li>
+                        <li><button id="a2" class="choicePicked">Answer 2</button></li>
+                        <li><button id="a3" class="choicePicked">Answer 3</button></li>
+                        <li><button id="a4" class="choicePicked">Answer 4</button></li>
                     </ul>
+                    <p id="answerResult"></p>
                 </section>
 
                 <!-- Quiz results screen -->
-                <section class="quiz-results-screen">
+                <section id="sectionResults" class="hidden quiz-results-screen">
                     <h2>All Done!</h2>
-                    <p>Your final score is </p>
+                    <p id="finalScore">Your final score is </p>
                     <div>
                         <label for="">Enter Initials:</label>
-                        <input type="text">
-                        <button>Submit</button>
+                        <input id="initials" type="text">
+                        <button id="submit">Submit</button>
                     </div>
                 </section>
 
                 <!-- Quiz results history screen -->
-                <section class="quiz-results-history-screen">
+                <section id="sectionResultsHistory" class="hidden quiz-results-history-screen">
                     <h2 id="results-history-h2">High Scores</h2>
                     <ul id="results-history-ul">
                         <li>tpf: 22</li>
@@ -67,5 +69,6 @@
         </div>
     </div>
 </body>
+<script src="assets/js/crawl.js"></script>
 
 </html>
