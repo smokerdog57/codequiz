@@ -38,6 +38,12 @@ ul,li {
     list-style: none;
 }
 
+ol {
+    /* padding-left: 20px; */
+    padding-bottom: 10px;
+    display: list-item;
+}
+
 /* Overall container */
 .container {
     display: flex;
