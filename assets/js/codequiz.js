@@ -25,7 +25,7 @@ var currentQ;
 var initialCount;
 var intervalId;
 var finalScore;
-var historyIndex = 1;
+var historyIndex = localStorage.getItem("historyIndex") || 1;
 var currentState;
 var counterState;
 
@@ -78,7 +78,6 @@ renderquizIntro();
 //start quiz button click
 function renderquizIntro() {
     currentState = "quizIntro";
-    console.log(currentState);
     selectedAnswer = "";
     indexQ = 0;
     currentQ = "";
@@ -107,15 +106,15 @@ viewHighScoresBtn.addEventListener("click", function () {
 // initiate the quiz
 function startQuiz() {
     currentState = "quizQA";
-    console.log(currentState);
     headerQuizIntroEl.classList.add("hidden");
     sectionQaEl.classList.remove("hidden");
     // start countdown timer at 75 seconds
     countdown(initialCount);
     getQuestions(indexQ);
+    historyIndex = localStorage.getItem("historyIndex") || 1; // persist the historyIndex
 }
 // set the countdown timer
-function countdown() {
+function countdown(count) {   // ********
     counterState = "running";
     var count = initialCount;
     intervalId = setInterval(function () {
@@ -126,7 +125,7 @@ function countdown() {
             counterState = "zero"
         }
     }, 1000); // 1000 milliseconds = 1 second
-
+    timeCountEl.textContent = initialCount;
 }
 
 function getQuestions(indexQ) {
@@ -175,8 +174,9 @@ function checkAnswer(selectedAnswer, currentQ) {
         // 10 seconds penalty due to wrong answer
         initialCount = parseInt(timeCountEl.textContent) + 10;
         clearInterval(intervalId); // clear the current interval *********
-        countdown(); // call countdown to update with 10 sec penalty
+        countdown();; // call countdown to update with 10 sec penalty
     }
+
     indexQ++;
 
     // Check if we reached the end of questions
@@ -189,14 +189,12 @@ function checkAnswer(selectedAnswer, currentQ) {
         // .5 sec delay then display Results screen
         setTimeout(function () {
             currentState = "quizResult";
-            console.log(currentState);
             sectionQaEl.classList.add("hidden");
             sectionResultsEl.classList.remove("hidden");
             // freeze the countdown timer and log the count down time count to the score
             initialsEl.value = "";
-            clearInterval(intervalId);
+            //clearInterval(intervalId);
             counterState = "frozen";
-            //clearInterval(intervalId); // clear the current interval
             finalScore = finalScoreEl.textContent = (timeCountEl.textContent);
         }, 500);
     }
@@ -215,16 +213,33 @@ submitBtn.addEventListener("click", function (event) {
 
 function getResultsHistory(initials) {
     currentState = "quizHistory";
-    console.log(currentState);
     sectionResultsEl.classList.add("hidden");
     sectionResultsHistoryEl.classList.remove("hidden");
     var resultsHistoryList = document.getElementById("results-history-ul");
     var newListItem = document.createElement("li");
     newListItem.textContent = `${historyIndex}.  ${initials} - ${finalScore}`;
-    localStorage.setItem("newListItem", newListItem);
     resultsHistoryList.appendChild(newListItem);
     historyIndex++;
+    localStorage.setItem("historyIndex", historyIndex); // Save the updated historyIndex in localStorage
+    // Save the quiz results history in local storage
+    var quizResults = JSON.parse(localStorage.getItem("quizResults")) || [];
+    quizResults.push({ initials: initials, score: finalScore });
+    localStorage.setItem("quizResults", JSON.stringify(quizResults));
 }
+// retrieve the quiz results history when the page loads:
+function displayResultsHistory() {
+    var resultsHistoryList = document.getElementById("results-history-ul");
+    resultsHistoryList.innerHTML = ""; // Clear the existing list
+
+    var quizResults = JSON.parse(localStorage.getItem("quizResults")) || [];
+    quizResults.forEach(function (result, index) {
+        var newListItem = document.createElement("li");
+        newListItem.textContent = `${index + 1}.  ${result.initials} - ${result.score}`;
+        resultsHistoryList.appendChild(newListItem);
+    });
+}
+// Call the function to display quiz results history when the page loads
+displayResultsHistory();
 
 goBackBtn.addEventListener("click", function (event) {
     event.preventDefault;
@@ -237,7 +252,7 @@ clearBtn.addEventListener("click", function (event) {
     sectionResultsHistoryEl.classList.remove("hidden");
     localStorage.clear();
     historyIndex = 1;
-        var ulElement = document.querySelector("#results-history-ul");
+    var ulElement = document.querySelector("#results-history-ul");
     while (ulElement.firstChild) {
         ulElement.removeChild(ulElement.firstChild);
     }
