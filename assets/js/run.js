@@ -20,73 +20,83 @@ var viewHighScoresBtn = document.querySelector("#highScores");
 
 // Initialize the Global Q&A array of question/answer objects
 var selectedAnswer = "";
-var indexQ = 0;
-var currentQ = "";
-var initialCount = 75;
+var indexQ;
+var currentQ;
+var initialCount;
 var intervalId;
 var finalScore;
 var historyIndex = 1;
+var currentState;
 
 // Initialize the Q&A array of qA objects
-qA = [
-    {
-        question: "What species is a manatee’s closest living relative?",
-        a1: "Dog",
-        a2: "Elephant",
-        a3: "Walrus",
-        a4: "Right Whale",
-        correctA: "a2"
-    },
-    {
-        question: "How many extant species of horseshoe crabs are there currently?",
-        a1: "2",
-        a2: "8",
-        a3: "4",
-        a4: "1",
-        correctA: "a3"
-    },
-    {
-        question: "What is the baseline salinity of the Atlantic Ocean?",
-        a1: "35%",
-        a2: "35ppt",
-        a3: "80ppt",
-        a4: "10%",
-        correctA: "a2"
-    },
-    {
-        question: "How many tentacles does an octopus have?",
-        a1: "10",
-        a2: "8",
-        a3: "None",
-        a4: "16",
-        correctA: "a3"
-    },
-    {
-        question: "What is a narwhal’s “tusk” made of?",
-        a1: "horn",
-        a2: "antler",
-        a3: "tusk",
-        a4: "tooth",
-        correctA: "a4"
-    }
+qA = [{
+    question: "Commonly used datatypes do NOT include:",
+    a1: "strings",
+    a2: "booleans",
+    a3: "alerts",
+    a4: "numbers",
+    correctA: "a3"
+},
+{
+    question: "The condition in an IF ELSE statement is enclosed in _____",
+    a1: "quotes",
+    a2: "curly brackets",
+    a3: "parenthesis",
+    a4: "square brackets",
+    correctA: "a3"
+},
+{
+    question: "Arrays in javascript can be used to store _____",
+    a1: "numbers and strings",
+    a2: "other arrays",
+    a3: "booleans",
+    a4: "all of the above",
+    correctA: "a4"
+},
+{
+    question: "String values must be enclosed within _____ when being assigned to variables",
+    a1: "commas",
+    a2: "curly brackets",
+    a3: "quotes",
+    a4: "parenthesis",
+    correctA: "a3"
+},
+{
+    question: "A very useful tool used during development and debugging for printing content to the debugger is:",
+    a1: "JavaScript",
+    a2: "terminal/bash",
+    a3: "for loops",
+    a4: "console.log",
+    correctA: "a4"
+}
 ]
 
-// display the quiz intro screen and stop here until start quiz button is pushed
-headerQuizIntroEl.className = "quiz-intro-screen";
+renderquizIntro();
+
+// display the quiz intro screen, initialize the global variables / wait for
+//start quiz button click
+function renderquizIntro() {
+    selectedAnswer = "";
+    indexQ = 0;
+    currentQ = "";
+    initialCount = 75;
+    headerQuizIntroEl.classList.remove("hidden");
+}
 
 // listen for start quiz click, hide the intro screen, display the Q&A screen and initialize qA1 elements
-startQuizBtn.addEventListener("click", function () {
-    console.log("start button was clicked");
+startQuizBtn.addEventListener("click", function (event) {
+    event.preventDefault;
     startQuiz();
 });
 
+// listen for the view high scores button click
 viewHighScoresBtn.addEventListener("click", function () {
     sectionResultsHistoryEl.classList.remove("hidden"); // Show the high scores history screen
     sectionResultsEl.classList.add("hidden"); // Hide the quiz results screen
     sectionQaEl.classList.add("hidden"); // Hide the quiz Q&A screen
     headerQuizIntroEl.classList.add("hidden"); // Hide the quiz intro screen
 })
-
+// initiate the quiz
 function startQuiz() {
     headerQuizIntroEl.classList.add("hidden");
     sectionQaEl.classList.remove("hidden");
@@ -104,7 +114,7 @@ function countdown() {
             clearInterval(intervalId); // Stop the interval when the countdown is completed
         }
     }, 1000); // 1000 milliseconds = 1 second
-    //return
+
 }
 
 function getQuestions(indexQ) {
@@ -120,6 +130,7 @@ function getQuestions(indexQ) {
 // listen for a click on the selected answer button call checkAnswer function 
 // passing selectedAnswer string
 a1Btn.addEventListener("click", function (event) {
+    event.preventDefault;
     selectedAnswer = "a1";
     checkAnswer(selectedAnswer, qA[indexQ]);
 });
@@ -149,7 +160,7 @@ function checkAnswer(selectedAnswer, currentQ) {
         // 10 seconds penalty due to wrong answer
         initialCount = parseInt(timeCountEl.textContent) + 10;
         clearInterval(intervalId); // clear the current interval
-        countdown(); // call countdown to update with 10 sec penalty CHANGED***
+        countdown(); // call countdown to update with 10 sec penalty
     }
     indexQ++;
 
@@ -165,6 +176,7 @@ function checkAnswer(selectedAnswer, currentQ) {
             sectionQaEl.classList.add("hidden");
             sectionResultsEl.classList.remove("hidden");
             // freeze the countdown timer and log the count down time count to the score
+            initialsEl.value = "";
             clearInterval(intervalId);
             finalScore = finalScoreEl.textContent = (timeCountEl.textContent);
         }, 500);
@@ -187,19 +199,23 @@ function getResultsHistory(initials) {
     var resultsHistoryList = document.getElementById("results-history-ul");
     var newListItem = document.createElement("li");
     newListItem.textContent = `${historyIndex}.  ${initials} - ${finalScore}`;
+    localStorage.setItem("newListItem", newListItem);
     resultsHistoryList.appendChild(newListItem);
     historyIndex++;
 }
 
-goBackBtn.addEventListener("click", function () {
+goBackBtn.addEventListener("click", function (event) {
+    event.preventDefault;
     sectionResultsHistoryEl.classList.add("hidden");
     indexQ = 0;
     initialCount = 75;
-    startQuiz();
+    renderquizIntro();
 })
 
 clearBtn.addEventListener("click", function () {
     sectionResultsHistoryEl.classList.remove("hidden");
+    localStorage.clear();
+    historyIndex = 1;
     indexQ = 0;
     initialCount = 75;
     var ulElement = document.querySelector("#results-history-ul");
