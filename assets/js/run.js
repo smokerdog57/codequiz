@@ -27,6 +27,7 @@ var intervalId;
 var finalScore;
 var historyIndex = 1;
 var currentState;
+var counterState;
 
 // Initialize the Q&A array of qA objects
 qA = [{
@@ -76,11 +77,14 @@ renderquizIntro();
 // display the quiz intro screen, initialize the global variables / wait for
 //start quiz button click
 function renderquizIntro() {
+    currentState = "quizIntro";
+    console.log(currentState);
     selectedAnswer = "";
     indexQ = 0;
     currentQ = "";
     initialCount = 75;
     headerQuizIntroEl.classList.remove("hidden");
+    timeCountEl.textContent = initialCount;
 }
 
 // listen for start quiz click, hide the intro screen, display the Q&A screen and initialize qA1 elements
@@ -91,13 +95,19 @@ startQuizBtn.addEventListener("click", function (event) {
 
 // listen for the view high scores button click
 viewHighScoresBtn.addEventListener("click", function () {
-    sectionResultsHistoryEl.classList.remove("hidden"); // Show the high scores history screen
-    sectionResultsEl.classList.add("hidden"); // Hide the quiz results screen
-    sectionQaEl.classList.add("hidden"); // Hide the quiz Q&A screen
-    headerQuizIntroEl.classList.add("hidden"); // Hide the quiz intro screen
+    if (currentState === "quizQA") {
+        alert("Viewing high scores is not permitted while taking the quiz, so wait until quiz is done.")
+    } else {
+        sectionResultsHistoryEl.classList.remove("hidden"); // Show the high scores history screen
+        sectionResultsEl.classList.add("hidden"); // Hide the quiz results screen
+        sectionQaEl.classList.add("hidden"); // Hide the quiz Q&A screen
+        headerQuizIntroEl.classList.add("hidden"); // Hide the quiz intro screen
+    }
 })
 // initiate the quiz
 function startQuiz() {
+    currentState = "quizQA";
+    console.log(currentState);
     headerQuizIntroEl.classList.add("hidden");
     sectionQaEl.classList.remove("hidden");
     // start countdown timer at 75 seconds
@@ -106,12 +116,14 @@ function startQuiz() {
 }
 // set the countdown timer
 function countdown() {
+    counterState = "running";
     var count = initialCount;
     intervalId = setInterval(function () {
         timeCountEl.textContent = (count);
         count--;
         if (count < 0) {
             clearInterval(intervalId); // Stop the interval when the countdown is completed
+            counterState = "zero"
         }
     }, 1000); // 1000 milliseconds = 1 second
 
@@ -136,16 +148,19 @@ a1Btn.addEventListener("click", function (event) {
 });
 
 a2Btn.addEventListener("click", function (event) {
+    event.preventDefault;
     selectedAnswer = "a2";
     checkAnswer(selectedAnswer, qA[indexQ]);
 });
 
 a3Btn.addEventListener("click", function (event) {
+    event.preventDefault;
     selectedAnswer = "a3";
     checkAnswer(selectedAnswer, qA[indexQ]);
 });
 
 a4Btn.addEventListener("click", function (event) {
+    event.preventDefault;
     selectedAnswer = "a4";
     checkAnswer(selectedAnswer, qA[indexQ]);
 });
@@ -159,7 +174,7 @@ function checkAnswer(selectedAnswer, currentQ) {
         answerResultEl.textContent = "Wrong!";
         // 10 seconds penalty due to wrong answer
         initialCount = parseInt(timeCountEl.textContent) + 10;
-        clearInterval(intervalId); // clear the current interval
+        clearInterval(intervalId); // clear the current interval *********
         countdown(); // call countdown to update with 10 sec penalty
     }
     indexQ++;
@@ -173,17 +188,22 @@ function checkAnswer(selectedAnswer, currentQ) {
     } else {
         // .5 sec delay then display Results screen
         setTimeout(function () {
+            currentState = "quizResult";
+            console.log(currentState);
             sectionQaEl.classList.add("hidden");
             sectionResultsEl.classList.remove("hidden");
             // freeze the countdown timer and log the count down time count to the score
             initialsEl.value = "";
             clearInterval(intervalId);
+            counterState = "frozen";
+            //clearInterval(intervalId); // clear the current interval
             finalScore = finalScoreEl.textContent = (timeCountEl.textContent);
         }, 500);
     }
 }
 
-submitBtn.addEventListener("click", function () {
+submitBtn.addEventListener("click", function (event) {
+    event.defaultPrevented;
     var inputValue = initialsEl.value.trim();
     if (inputValue === "") { //verify user entered intials
         alert("Please enter your initials before clicking submit")
@@ -194,6 +214,8 @@ submitBtn.addEventListener("click", function () {
 });
 
 function getResultsHistory(initials) {
+    currentState = "quizHistory";
+    console.log(currentState);
     sectionResultsEl.classList.add("hidden");
     sectionResultsHistoryEl.classList.remove("hidden");
     var resultsHistoryList = document.getElementById("results-history-ul");
@@ -207,18 +229,15 @@ function getResultsHistory(initials) {
 goBackBtn.addEventListener("click", function (event) {
     event.preventDefault;
     sectionResultsHistoryEl.classList.add("hidden");
-    indexQ = 0;
-    initialCount = 75;
     renderquizIntro();
 })
 
-clearBtn.addEventListener("click", function () {
+clearBtn.addEventListener("click", function (event) {
+    event.preventDefault;
     sectionResultsHistoryEl.classList.remove("hidden");
     localStorage.clear();
     historyIndex = 1;
-    indexQ = 0;
-    initialCount = 75;
-    var ulElement = document.querySelector("#results-history-ul");
+        var ulElement = document.querySelector("#results-history-ul");
     while (ulElement.firstChild) {
         ulElement.removeChild(ulElement.firstChild);
     }
