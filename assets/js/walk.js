@@ -16,6 +16,7 @@ var finalScoreEl = document.querySelector("#finalScore");
 var submitBtn = document.querySelector("#submit");
 var goBackBtn = document.querySelector("#goBack");
 var clearBtn = document.querySelector("#clear");
+var viewHighScoresBtn = document.querySelector("#highScores");
 
 // Initialize the Global Q&A array of question/answer objects
 var selectedAnswer = "";
@@ -53,6 +54,13 @@ startQuizBtn.addEventListener("click", function () {
     console.log("start button was clicked");
     startQuiz();
 });
+
+viewHighScoresBtn.addEventListener("click", function () {
+    sectionResultsHistoryEl.classList.remove("hidden"); // Show the high scores history screen
+    sectionResultsEl.classList.add("hidden"); // Hide the quiz results screen
+    sectionQaEl.classList.add("hidden"); // Hide the quiz Q&A screen
+    headerQuizIntroEl.classList.add("hidden"); // Hide the quiz intro screen
+})
 
 function startQuiz() {
     headerQuizIntroEl.classList.add("hidden");
@@ -121,7 +129,7 @@ function checkAnswer(selectedAnswer, currentQ) {
     indexQ++;
 
     // Check if we reached the end of questions
-    if (indexQ < qA.length) {
+    if (indexQ < qA.length && parseInt(timeCountEl.textContent) > 0) {
         // .5sec delay then get next question
         setTimeout(function () {
             getQuestions(indexQ);
@@ -173,4 +181,5 @@ clearBtn.addEventListener("click", function () {
     while (ulElement.firstChild) {
         ulElement.removeChild(ulElement.firstChild);
     }
-});
+})
+
