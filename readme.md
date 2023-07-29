@@ -1,9 +1,9 @@
-# Secure Password Generator
+# Code Quiz
 
 #### Coder: Tom Fusco 28-Jul-2023
 #### web api(s) & JavaScript: Code Quiz
 
-<img src="assets/mockup/04-web-apis-homework-demo.gif" width=20%>
+<img src="assets/mockup/04-web-apis-homework-demo.gif" width=50%>
 
 #### Link to Deployed Application:  https://smokerdog57.github.io/codequiz/
 #### Link to GitHub repository:     https://github.com/smokerdog57/codequiz/
@@ -32,12 +32,12 @@ The following animation demonstrates the application functionality:
 
 ![A user clicks through an interactive coding quiz, then enters initials to save the high score before resetting and starting over.]
 
-<img src="assets/mockup/04-web-apis-homework-demo.gif" width=50%>
+<img src="assets/mockup/04-web-apis-homework-demo.gif" width=75%>
 
 ## Build, Installation and Deployment
 
  * Application built using MS Visual Studio.
- * Application was commited and pushed to GitHub repository "passwordgeneration" main branch.
+ * Application was commited and pushed to GitHub repository "codequiz" main branch.
  * Used GitHub "pages" to deploy application.
 
 ## Quality
