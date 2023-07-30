@@ -193,7 +193,7 @@ function checkAnswer(selectedAnswer, currentQ) {
             sectionResultsEl.classList.remove("hidden");
             // freeze the countdown timer and log the count down time count to the score
             initialsEl.value = "";
-            //clearInterval(intervalId);
+            clearInterval(intervalId);
             counterState = "frozen";
             finalScore = finalScoreEl.textContent = (timeCountEl.textContent);
         }, 500);
